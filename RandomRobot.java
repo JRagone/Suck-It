@@ -17,6 +17,7 @@ public class RandomRobot extends Robot {
 		room.addRobot(this);
 	}
 	
+	@Override
 	public List<RobotMove> generateMoves(RoomState state){
 		List<RobotMove> moves = new ArrayList<RobotMove>();
 		if(position[ROW]+1<state.rowCount){
@@ -34,6 +35,7 @@ public class RandomRobot extends Robot {
 		return moves;
 	}
 	
+	@Override
 	public RobotMove getMove(RoomState state){
 		List<RobotMove> moves = generateMoves(state);
 		if(moves.size()==0){

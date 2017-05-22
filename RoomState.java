@@ -33,7 +33,6 @@ public class RoomState {
 	
 	public void moveRobot(Robot robot){
 		RobotMove move = robot.getMove(this);
-		System.out.println(move);
 		for(int r = 0; r < rowCount; r++){
 			for(int c = 0; c < colCount; c++){
 				if(r==robot.getRow() && c==robot.getCol()){

@@ -56,15 +56,11 @@ public class SuckItSim extends Application {
     	RoomState start = new RoomState();
     	
     	Robot robot = new RandomRobot(start);
-    	start.drawState(root, screenWidth, screenHeight);
-    	for(RobotMove move: robot.generateMoves(start)){
-    		System.out.println(move);
-    	}
-    	System.out.println(start);
-    	start.moveRobot(robot);
-    	System.out.println(start);
-    	
-    	
+    	Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(1000),
+                ae -> doSomething(start, root, robot)));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     	
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
@@ -86,11 +82,7 @@ public class SuckItSim extends Application {
             }
         });
         
-        Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(1000),
-                ae -> doSomething(start, root, robot)));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+        
         
         
                    	
