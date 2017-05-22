@@ -34,8 +34,18 @@ public class RandomRobot extends Robot {
 		return moves;
 	}
 	
-	public RobotMove getMove(){
-		return null;
+	public RobotMove getMove(RoomState state){
+		List<RobotMove> moves = generateMoves(state);
+		if(moves.size()==0){
+			return null;
+		}
+		int select = (int) (Math.random()*moves.size());
+		return moves.get(select);
+	}
+	
+	public void applyMove(RobotMove move){
+		position[ROW] = move.x;
+		position[COL] = move.y;
 	}
 	
 	public int getRow(){

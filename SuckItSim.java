@@ -1,13 +1,20 @@
 package application;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
@@ -15,6 +22,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class SuckItSim extends Application {
 	
@@ -52,6 +60,11 @@ public class SuckItSim extends Application {
     	for(RobotMove move: robot.generateMoves(start)){
     		System.out.println(move);
     	}
+    	System.out.println(start);
+    	start.moveRobot(robot);
+    	System.out.println(start);
+    	
+    	
     	
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
@@ -73,7 +86,22 @@ public class SuckItSim extends Application {
             }
         });
         
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(1000),
+                ae -> doSomething(start, root, robot)));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+        
+        
+                   	
+        
         theStage.show();
         
 	}
+	
+	public void doSomething(RoomState start, Group root, Robot robot){
+        start.drawState(root, screenWidth, screenHeight);
+       	start.moveRobot(robot);
+	}
+	
 }
