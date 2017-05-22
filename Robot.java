@@ -1,5 +1,7 @@
 package application;
 
-public class Robot {
-
+public abstract class Robot {
+	public RobotMove getMove(){
+		return null;
+	}
 }

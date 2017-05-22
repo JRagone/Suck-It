@@ -1,5 +1,7 @@
 package application;
 
+import java.io.File;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -10,6 +12,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -26,14 +31,27 @@ public class SuckItSim extends Application {
         launch(args);
     }
     
+    private static MediaPlayer mediaPlayer;
+    
+    public void music(){
+		String path = "src/application/2 Unlimited - Get Ready For This.mp3";
+		Media media = new Media(new File(path).toURI().toString());
+		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setAutoPlay(true);
+		MediaView mediaView = new MediaView(mediaPlayer);
+	}
+    
 	@Override
 	public void start(Stage theStage){
+		
+		music();
+		
 		theStage.setTitle( "Timeline Example" );
     	theStage.setFullScreenExitHint("");
     	
     	Group root = new Group();
-    	Room room = new Room((int)Math.round(Math.random()*10+1), (int)Math.round(Math.random()*10+1));
-    	room.drawRoom(root, screenWidth, screenHeight);
+    	RoomState start = new RoomState();
+    	start.drawState(root, screenWidth, screenHeight);
     	
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
@@ -54,16 +72,6 @@ public class SuckItSim extends Application {
                 }
             }
         });
-        
-        
-        
-        new AnimationTimer()
-        {
-            public void handle(long currentNanoTime)
-            {
-                
-            }
-        }.start();
         
         theStage.show();
         

@@ -16,12 +16,12 @@ public class Room {
 	
 	public void drawRoom(Group root, double width, double height){
 		for (int row = 0; row < rowCount; row++) {
-    		for(int col = 0; col<colCount; col++){
+    		for(int col = 0; col < colCount; col++){
 	    	    Rectangle r = new Rectangle();
-	    	    r.setX(col*width/colCount);
-	    	    r.setY(row * height/rowCount);
-	    	    r.setWidth(width/colCount);
-	    	    r.setHeight(height/rowCount);
+	    	    r.setX(col * (width*.94)/colCount+width*.03);
+	    	    r.setY(row * (height-width*.06)/rowCount+width*.03);
+	    	    r.setWidth(width*.94/colCount);
+	    	    r.setHeight((height-width*.03)/rowCount);
 	    	    r.setFill(Color.RED);
 	    	    r.setStroke(Color.BLACK);
 	    	    root.getChildren().add(r);
@@ -29,5 +29,12 @@ public class Room {
     	}
 	}
 	
+	public int getRows(){
+		return rowCount;
+	}
+	
+	public int getCols(){
+		return colCount;
+	}
 	
 }
