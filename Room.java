@@ -14,15 +14,23 @@ public class Room {
 		colCount = c;
 	}
 	
-	public void drawRoom(Group root, double width, double height){
+	public void drawRoom(Group root, RoomState state, double width, double height){
 		for (int row = 0; row < rowCount; row++) {
-    		for(int col = 0; col < colCount; col++){
+    		for(int col = 0; col < colCount; col++) {
 	    	    Rectangle r = new Rectangle();
 	    	    r.setX(col * (width*.94)/colCount+width*.03);
 	    	    r.setY(row * (height-width*.06)/rowCount+width*.03);
 	    	    r.setWidth(width*.94/colCount);
 	    	    r.setHeight((height-width*.03)/rowCount);
-	    	    r.setFill(Color.RED);
+	    	    if(state.board[row][col]==state.DIRT){
+	    	    	r.setFill(Color.TAN);
+	    	    }
+	    	    else if(state.board[row][col]==state.ROBOT){
+	    	    	r.setFill(Color.BLUE);
+	    	    }
+	    	    else{
+	    	    	r.setFill(Color.WHITE);
+	    	    }
 	    	    r.setStroke(Color.BLACK);
 	    	    root.getChildren().add(r);
     		}

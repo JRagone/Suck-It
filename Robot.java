@@ -1,7 +1,9 @@
 package application;
 
+import java.util.List;
+
 public abstract class Robot {
-	public RobotMove getMove(){
-		return null;
-	}
+	public abstract List<RobotMove> generateMoves(RoomState state);
+	
+	public abstract RobotMove getMove();
 }

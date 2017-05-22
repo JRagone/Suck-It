@@ -2,22 +2,17 @@ package application;
 
 import java.io.File;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -51,7 +46,12 @@ public class SuckItSim extends Application {
     	
     	Group root = new Group();
     	RoomState start = new RoomState();
+    	
+    	Robot robot = new RandomRobot(start);
     	start.drawState(root, screenWidth, screenHeight);
+    	for(RobotMove move: robot.generateMoves(start)){
+    		System.out.println(move);
+    	}
     	
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
