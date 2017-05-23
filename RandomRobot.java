@@ -5,10 +5,7 @@ import java.util.List;
 public class RandomRobot extends Robot {
 	
 	public RandomRobot(RoomState start){
-		room = start;
-		position[0] = (int)(Math.random()*room.rowCount);
-		position[1] = (int)(Math.random()*room.colCount);
-		room.addRobot(this);
+		super(start);
 	}
 	
 	//Randomly chooses move

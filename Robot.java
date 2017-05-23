@@ -6,10 +6,15 @@ import java.util.List;
 public abstract class Robot {
 	
 	//Inherited Attributes
-	protected RoomState room;
 	protected final int ROW = 0;
 	protected final int COL = 1;
 	protected int[] position = new int[2];
+	
+	public Robot(RoomState start){
+		position[0] = (int)(Math.random()*start.rowCount);
+		position[1] = (int)(Math.random()*start.colCount);
+		start.addRobot(this);
+	}
 	
 	//Creates a list of possible moves given a state
 	public List<RobotMove> generateMoves(RoomState state){

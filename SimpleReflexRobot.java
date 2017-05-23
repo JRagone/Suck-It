@@ -10,13 +10,10 @@ public class SimpleReflexRobot extends Robot {
 	 */
 	
 	public SimpleReflexRobot(RoomState start){
-		room = start;
-		position[0] = (int)(Math.random()*room.rowCount);
-		position[1] = (int)(Math.random()*room.colCount);
-		room.addRobot(this);
+		super(start);
 	}
 	
-	public RobotMove senseDirt(RoomState state){
+	public RobotMove senseDirtMove(RoomState state){
 		if(position[ROW]+1<state.rowCount && state.board[position[ROW]+1][position[COL]]==state.DIRT){
 			return new RobotMove(position[ROW]+1, position[COL]);
 		}
@@ -35,7 +32,7 @@ public class SimpleReflexRobot extends Robot {
 	//Uses condition-action rules to pick move
 	@Override
 	public RobotMove getMove(RoomState state) {
-		RobotMove move = senseDirt(state);
+		RobotMove move = senseDirtMove(state);
 		if(move!=null){
 			return move;
 		}
