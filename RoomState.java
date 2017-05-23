@@ -12,15 +12,17 @@ public class RoomState {
 	public final int DIRT = 1;
 	public final int ROBOT = 2;
 	
+	//Constructor
 	RoomState(){
-		room = new Room((int)Math.round(Math.random()*10+5), (int)Math.round(Math.random()*10+5));
+		room = new Room((int)Math.round(Math.random()*10+5), (int)Math.round(Math.random()*10+5)); //Creates instance of room
 		rowCount = room.getRows();
 		colCount = room.getCols();
 		board = new int[rowCount][colCount];
-		addDirt();
+		addDirt(); //Adds dirt randomly
 		System.out.println(this);
 	}
 	
+	//Takes a given robot and draws it in the room
 	public void addRobot(Robot robot){
 		for(int r = 0; r < rowCount; r++){
 			for(int c = 0; c < colCount; c++){
@@ -31,8 +33,12 @@ public class RoomState {
 		}
 	}
 	
+	//Takes a robot and calls getMove, then applies move
 	public void moveRobot(Robot robot){
 		RobotMove move = robot.getMove(this);
+		if(move==null){	//Safety for NullPointerException
+			return;
+		}
 		for(int r = 0; r < rowCount; r++){
 			for(int c = 0; c < colCount; c++){
 				if(r==robot.getRow() && c==robot.getCol()){
@@ -46,6 +52,7 @@ public class RoomState {
 		robot.applyMove(move);
 	}
 	
+	//Randomly places dirt
 	public void addDirt(){
 		for(int r = 0; r < rowCount; r++){
 			for(int c = 0; c < colCount; c++){
@@ -56,10 +63,12 @@ public class RoomState {
 		}
 	}
 	
+	//Visualizes current state
 	public void drawState(Group root, double w, double h){
 		room.drawRoom(root, this, w, h);
 	}
 	
+	//Prints room
 	@Override
 	public String toString(){
 		String out = "";

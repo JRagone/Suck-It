@@ -1,11 +1,7 @@
 package application;
 
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -14,12 +10,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -41,7 +35,6 @@ public class SuckItSim extends Application {
 		Media media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.setAutoPlay(true);
-		MediaView mediaView = new MediaView(mediaPlayer);
 	}
     
 	@Override
@@ -55,7 +48,7 @@ public class SuckItSim extends Application {
     	Group root = new Group();
     	RoomState start = new RoomState();
     	
-    	Robot robot = new RandomRobot(start);
+    	Robot robot = new SimpleReflexRobot(start);
     	Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(1000),
                 ae -> doSomething(start, root, robot)));
