@@ -48,7 +48,7 @@ public class SuckItSim extends Application {
     	Group root = new Group();
     	RoomState start = new RoomState();
     	
-    	ModelReflexRobot robot = new ModelReflexRobot(start);
+    	Robot robot = new ModelReflexRobot(start);
     	Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(1000),
                 ae -> doSomething(start, root, robot)));
@@ -74,19 +74,13 @@ public class SuckItSim extends Application {
                 }
             }
         });
-        
-        
-        
-        
-                   	
-        
+
         theStage.show();
         
 	}
 	
-	public void doSomething(RoomState start, Group root, ModelReflexRobot robot){
-		System.out.println(robot.printModel());
-        start.drawState(root, screenWidth, screenHeight);
+	public void doSomething(RoomState start, Group root, Robot robot){
+        start.drawState(root, screenWidth/2, screenHeight);
        	start.moveRobot(robot);
 	}
 	

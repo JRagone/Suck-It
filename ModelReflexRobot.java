@@ -4,14 +4,14 @@ import java.util.List;
 
 public class ModelReflexRobot extends SimpleReflexRobot {
 	
-	private int[][] model;
-	public final int UNVISITED = 4;
-	
 	/*
 	 * The ModelReflexRobot has all the sensors of the SimpleReflex,
-	 * but it also contains a state, which keeps track of the world
-	 * and where the robot is in it.
+	 * but it also contains an internal state, which keeps track of
+	 * the world and where the robot is in it.
 	 */
+	
+	private int[][] model;
+	public final int UNVISITED = 4;
 	
 	public ModelReflexRobot(RoomState start){
 		super(start);
@@ -44,7 +44,7 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 			model[position[ROW]][position[COL]+1]=state.DIRT;
 		}
 		if(position[COL]-1>=0 && state.board[position[ROW]][position[COL]-1]==state.DIRT){
-			model[position[ROW]+1][position[COL]-1]=state.DIRT;
+			model[position[ROW]][position[COL]-1]=state.DIRT;
 		}
 	}
 	
@@ -56,13 +56,15 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 	}
 	
 	public int[] findClosest(RoomState state, int type){
-		int[] bestPos = null;
-		int[] Pos1 = null;
-		double Dist1 = Double.POSITIVE_INFINITY;
+		
+		int[] bestPos = null;						//Best position to be returned
+		int[] Pos1 = null;							//Test position for comparison
+		double Dist1 = Double.POSITIVE_INFINITY;	//Test distance for comparison
 		int[] Pos2 = null;
 		double Dist2 = Double.POSITIVE_INFINITY;
+		
 		for(int r = position[ROW]; r>=0; r--){
-			for(int c = 0; c<state.colCount; c++){
+			for(int c = position[COL]; c<state.colCount; c++){
 				if(model[r][c]==type){
 					Pos1 = new int[2];
 					Pos1[ROW] = r;
@@ -71,8 +73,8 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 				}
 			}
 		}
-		for(int r = position[ROW]; r>=0; r--){
-			for(int c = 0; c<state.colCount; c++){
+		for(int r = position[ROW]; r<state.rowCount; r++){
+			for(int c = position[COL]; c>=0; c--){
 				if(model[r][c]==type){
 					Pos2 = new int[2];
 					Pos2[ROW] = r;
@@ -103,10 +105,11 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 		if(moves.size()==0){	//Checks for empty list
 			return null;
 		}
-		RobotMove closeMove = moves.get(0);
+		RobotMove closeMove = null;
 		double closestMoveDist = Double.POSITIVE_INFINITY;
 		int[] closestDirt = findClosest(state, state.DIRT);
 		if(closestDirt!=null){
+			System.out.println("closestDirt not null");
 			for(RobotMove move : moves){
 				double tmpDist = Math.pow(move.x - closestDirt[ROW], 2) + Math.pow(move.y - closestDirt[COL], 2);
 				if(Math.min(closestMoveDist, tmpDist)==tmpDist){
@@ -114,6 +117,7 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 					closeMove = move;
 				}
 			}
+			System.out.println("made it");
 			return closeMove;
 		}
 		int[] closestUnvisited = findClosest(state, UNVISITED);
@@ -126,6 +130,7 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 				}
 			}
 		}
+		System.out.println(printModel());
 		return closeMove;
 	}
 	
