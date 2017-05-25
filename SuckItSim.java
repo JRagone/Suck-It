@@ -6,12 +6,19 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
@@ -23,7 +30,7 @@ public class SuckItSim extends Application {
 	public GraphicsContext gc;
 	public double screenWidth = Screen.getPrimary().getBounds().getWidth();
     public double screenHeight = Screen.getPrimary().getBounds().getHeight();
-	
+    
     public static void main(String[] args) {
         launch(args);
     }
@@ -34,7 +41,7 @@ public class SuckItSim extends Application {
 		String path = "src/application/2 Unlimited - Get Ready For This.mp3";
 		Media media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.setAutoPlay(true);
+		//mediaPlayer.setAutoPlay(true);
 	}
     
 	@Override
@@ -46,14 +53,24 @@ public class SuckItSim extends Application {
     	theStage.setFullScreenExitHint("");
     	
     	Group root = new Group();
-    	RoomState start = new RoomState();
     	
-    	Robot robot = new ModelReflexRobot(start);
-    	Timeline timeline = new Timeline(new KeyFrame(
+    	RoomState leftStart = new RoomState();
+    	RoomState rightStart = leftStart.clone();
+    	
+    	Robot leftRobot = new ModelReflexRobot(leftStart);
+    	Robot rightRobot = new SimpleReflexRobot(rightStart);
+    	
+    	Timeline leftTimeline = new Timeline(new KeyFrame(
                 Duration.millis(1000),
-                ae -> doSomething(start, root, robot)));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+                ae -> leftDrawMove(leftStart, root, leftRobot)));
+        leftTimeline.setCycleCount(Animation.INDEFINITE);
+        leftTimeline.play();
+        
+        Timeline rightTimeline = new Timeline(new KeyFrame(
+                Duration.millis(1000),
+                ae -> rightDrawMove(rightStart, root, rightRobot)));
+        rightTimeline.setCycleCount(Animation.INDEFINITE);
+        rightTimeline.play();
     	
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
@@ -74,13 +91,29 @@ public class SuckItSim extends Application {
                 }
             }
         });
+        
+        final ComboBox priorityComboBox = new ComboBox();
+        priorityComboBox.getItems().addAll(
+            "Simple Reflex Robot",
+            "Random Robot",
+            "Model-Based Reflex Robot"
+        );   
 
+        priorityComboBox.setLayoutX(screenWidth/2);
+        
+        root.getChildren().add(priorityComboBox);
+        
         theStage.show();
         
 	}
 	
-	public void doSomething(RoomState start, Group root, Robot robot){
-        start.drawState(root, screenWidth/2, screenHeight);
+	public void leftDrawMove(RoomState start, Group root, Robot robot){
+        start.drawState(root, screenWidth/2, screenHeight, 0);
+       	start.moveRobot(robot);
+	}
+	
+	public void rightDrawMove(RoomState start, Group root, Robot robot){
+        start.drawState(root, screenWidth/2, screenHeight, screenWidth/2);
        	start.moveRobot(robot);
 	}
 	

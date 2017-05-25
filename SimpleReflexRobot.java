@@ -14,16 +14,16 @@ public class SimpleReflexRobot extends Robot {
 	}
 	
 	public RobotMove senseDirtMove(RoomState state){
-		if(position[ROW]+1<state.rowCount && state.board[position[ROW]+1][position[COL]]==state.DIRT){
+		if(position[ROW]+1<state.getRowCount() && state.getBoard()[position[ROW]+1][position[COL]]==state.DIRT){
 			return new RobotMove(position[ROW]+1, position[COL]);
 		}
-		if(position[ROW]-1>=0 && state.board[position[ROW]-1][position[COL]]==state.DIRT){
+		if(position[ROW]-1>=0 && state.getBoard()[position[ROW]-1][position[COL]]==state.DIRT){
 			return new RobotMove(position[ROW]-1, position[COL]);
 		}
-		if(position[COL]+1<state.colCount && state.board[position[ROW]][position[COL]+1]==state.DIRT){
+		if(position[COL]+1<state.getColCount() && state.getBoard()[position[ROW]][position[COL]+1]==state.DIRT){
 			return new RobotMove(position[ROW], position[COL]+1);
 		}
-		if(position[COL]-1>=0 && state.board[position[ROW]][position[COL]-1]==state.DIRT){
+		if(position[COL]-1>=0 && state.getBoard()[position[ROW]][position[COL]-1]==state.DIRT){
 			return new RobotMove(position[ROW], position[COL]-1);
 		}
 		return null;
@@ -36,7 +36,7 @@ public class SimpleReflexRobot extends Robot {
 		if(move!=null){
 			return move;
 		}
-		if(position[COL]+1<state.colCount){							//Condition
+		if(position[COL]+1<state.getColCount()){						//Condition
 			return new RobotMove(position[ROW], position[COL]+1);	//Action
 		}
 		else{

@@ -5,9 +5,9 @@ import javafx.scene.Group;
 public class RoomState {
 	
 	private Room room;
-	int[][] board;
-	public final int rowCount;
-	public final int colCount;
+	private int[][] board;
+	private int rowCount;
+	private int colCount;
 	public final int NOTHING = 0;
 	public final int DIRT = 1;
 	public final int ROBOT = 2;
@@ -64,8 +64,41 @@ public class RoomState {
 	}
 	
 	//Visualizes current state
-	public void drawState(Group root, double w, double h){
-		room.drawRoom(root, this, w, h);
+	public void drawState(Group root, double w, double h, double x){
+		room.drawRoom(root, this, w, h, x);
+	}
+	
+	//Clone room
+	public RoomState clone(){
+		RoomState clone = new RoomState();
+		clone.board = new int[rowCount][colCount];
+		clone.rowCount = rowCount;
+		clone.colCount = colCount;
+		for(int r = 0; r < clone.rowCount; r++){
+			for(int c = 0; c < clone.colCount; c++){
+				if(board[r][c]==DIRT){
+					clone.board[r][c]=DIRT;
+				}
+				else{
+					clone.board[r][c]=NOTHING;
+				}
+			}
+		}
+		clone.room = room;
+		System.out.println(clone);
+		return clone;
+	}
+	
+	public int[][] getBoard(){
+		return board;
+	}
+	
+	public int getRowCount(){
+		return rowCount;
+	}
+	
+	public int getColCount(){
+		return colCount;
 	}
 	
 	//Prints room

@@ -15,18 +15,18 @@ public class Room {
 	}
 	
 	//Creates a random room within given bounds and according to given state
-	public void drawRoom(Group root, RoomState state, double width, double height){
+	public void drawRoom(Group root, RoomState state, double width, double height, double xOffset){
 		for (int row = 0; row < rowCount; row++) {
     		for(int col = 0; col < colCount; col++) {
 	    	    Rectangle r = new Rectangle();
-	    	    r.setX(col * (width*.94)/colCount+width*.03); //Offset for border
+	    	    r.setX(col * (width*.94)/colCount+width*.03 + xOffset); //Offset for border
 	    	    r.setY(row * (height-width*.06)/rowCount+width*.03);
 	    	    r.setWidth(width*.94/colCount);
 	    	    r.setHeight((height-width*.03)/rowCount);
-	    	    if(state.board[row][col]==state.DIRT){
+	    	    if(state.getBoard()[row][col]==state.DIRT){
 	    	    	r.setFill(Color.TAN);
 	    	    }
-	    	    else if(state.board[row][col]==state.ROBOT){
+	    	    else if(state.getBoard()[row][col]==state.ROBOT){
 	    	    	r.setFill(Color.BLUE);
 	    	    }
 	    	    else{

@@ -20,9 +20,9 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 	}
 	
 	public void startModel(RoomState start){
-		model = new int[start.rowCount][start.colCount];
-		for(int r = 0; r<start.rowCount; r++){
-			for(int c = 0; c<start.colCount; c++){
+		model = new int[start.getRowCount()][start.getColCount()];
+		for(int r = 0; r<start.getRowCount(); r++){
+			for(int c = 0; c<start.getColCount(); c++){
 				if(r==position[ROW] && c==position[COL]){
 					model[r][c] = start.ROBOT;
 				}
@@ -34,16 +34,16 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 	}
 	
 	public void senseDirtMap(RoomState state){
-		if(position[ROW]+1<state.rowCount && state.board[position[ROW]+1][position[COL]]==state.DIRT){
+		if(position[ROW]+1<state.getRowCount() && state.getBoard()[position[ROW]+1][position[COL]]==state.DIRT){
 			model[position[ROW]+1][position[COL]]=state.DIRT;
 		}
-		if(position[ROW]-1>=0 && state.board[position[ROW]-1][position[COL]]==state.DIRT){
+		if(position[ROW]-1>=0 && state.getBoard()[position[ROW]-1][position[COL]]==state.DIRT){
 			model[position[ROW]-1][position[COL]]=state.DIRT;
 		}
-		if(position[COL]+1<state.colCount && state.board[position[ROW]][position[COL]+1]==state.DIRT){
+		if(position[COL]+1<state.getColCount() && state.getBoard()[position[ROW]][position[COL]+1]==state.DIRT){
 			model[position[ROW]][position[COL]+1]=state.DIRT;
 		}
-		if(position[COL]-1>=0 && state.board[position[ROW]][position[COL]-1]==state.DIRT){
+		if(position[COL]-1>=0 && state.getBoard()[position[ROW]][position[COL]-1]==state.DIRT){
 			model[position[ROW]][position[COL]-1]=state.DIRT;
 		}
 	}
@@ -64,7 +64,7 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 		double Dist2 = Double.POSITIVE_INFINITY;
 		
 		for(int r = position[ROW]; r>=0; r--){
-			for(int c = position[COL]; c<state.colCount; c++){
+			for(int c = position[COL]; c<state.getColCount(); c++){
 				if(model[r][c]==type){
 					Pos1 = new int[2];
 					Pos1[ROW] = r;
@@ -73,7 +73,7 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 				}
 			}
 		}
-		for(int r = position[ROW]; r<state.rowCount; r++){
+		for(int r = position[ROW]; r<state.getRowCount(); r++){
 			for(int c = position[COL]; c>=0; c--){
 				if(model[r][c]==type){
 					Pos2 = new int[2];

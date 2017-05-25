@@ -5,8 +5,8 @@ import java.util.List;
 public class RandomRobot extends Robot {
 	
 	/*
-	 * The RandomRobot simply generates a list of moves
-	 * and randomly picks its next move from the list.
+	 * The RandomRobot generates a list of moves and
+	 * randomly picks its next move from said list.
 	 */
 	
 	public RandomRobot(RoomState start){
