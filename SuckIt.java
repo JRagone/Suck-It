@@ -29,20 +29,6 @@ public class SuckIt {
 		
 		RoomState leftStart = new RoomState();
     	RoomState rightStart = leftStart.clone();
-    	
-    	Robot leftRobot = new ModelReflexRobot(leftStart);
-    	Robot rightRobot = new SimpleReflexRobot(rightStart);
-    	
-    	Timeline leftTimeline = new Timeline(new KeyFrame(
-                Duration.millis(1000),
-                ae -> leftDrawMove(leftStart, root, leftRobot)));
-        leftTimeline.setCycleCount(Animation.INDEFINITE);
-        
-        
-        Timeline rightTimeline = new Timeline(new KeyFrame(
-                Duration.millis(1000),
-                ae -> rightDrawMove(rightStart, root, rightRobot)));
-        rightTimeline.setCycleCount(Animation.INDEFINITE);
 		
         final ComboBox leftComboBox = new ComboBox();
         leftComboBox.getItems().addAll(
@@ -69,12 +55,52 @@ public class SuckIt {
         
 		root.getChildren().add(rightComboBox);
 		
+		
+		
 		new AnimationTimer(){
+			
+			Timeline leftTimeline;
+			Timeline rightTimeline;
+			
         	@Override
         	public void handle(long now){
         		if(!leftComboBox.getSelectionModel().isEmpty() && !rightComboBox.getSelectionModel().isEmpty()){
         			if(startSelection){
+        				Robot leftRobot;
+        				Robot rightRobot;
         				
+        				if(leftComboBox.getValue().equals(leftComboBox.getItems().get(0))){
+        					leftRobot = new SimpleReflexRobot(leftStart);
+        				}
+        				else if(leftComboBox.getValue().equals(leftComboBox.getItems().get(1))){
+        					leftRobot = new RandomRobot(leftStart);
+        				}
+        				else{
+        					leftRobot = new ModelReflexRobot(leftStart);
+        				}
+        				
+        				if(rightComboBox.getValue().equals(rightComboBox.getItems().get(0))){
+        					rightRobot = new SimpleReflexRobot(rightStart);
+        				}
+        				else if(rightComboBox.getValue().equals(rightComboBox.getItems().get(1))){
+        					rightRobot = new RandomRobot(rightStart);
+        				}
+        				else{
+        					rightRobot = new ModelReflexRobot(rightStart);
+        				}
+        				
+        				leftTimeline = new Timeline(new KeyFrame(
+        		                Duration.millis(1000),
+        		                ae -> leftDrawMove(leftStart, root, leftRobot)));
+        		        leftTimeline.setCycleCount(Animation.INDEFINITE);
+        		        
+        		        
+        		        rightTimeline = new Timeline(new KeyFrame(
+        		                Duration.millis(1000),
+        		                ae -> rightDrawMove(rightStart, root, rightRobot)));
+        		        rightTimeline.setCycleCount(Animation.INDEFINITE);
+        		        
+        				startSelection = false;
         			}
         			leftTimeline.play();
         			rightTimeline.play();
@@ -88,7 +114,8 @@ public class SuckIt {
 		String path = "src/application/2 Unlimited - Get Ready For This.mp3";
 		Media media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
-		//mediaPlayer.setAutoPlay(true);
+		mediaPlayer.setVolume(.5);
+		mediaPlayer.setAutoPlay(true);
 	}
 	
 	public void leftDrawMove(RoomState start, Group root, Robot robot){

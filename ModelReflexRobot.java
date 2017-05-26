@@ -58,42 +58,25 @@ public class ModelReflexRobot extends SimpleReflexRobot {
 	public int[] findClosest(RoomState state, int type){
 		
 		int[] bestPos = null;						//Best position to be returned
+		double bestDist = Double.POSITIVE_INFINITY;
 		int[] Pos1 = null;							//Test position for comparison
 		double Dist1 = Double.POSITIVE_INFINITY;	//Test distance for comparison
 		int[] Pos2 = null;
 		double Dist2 = Double.POSITIVE_INFINITY;
 		
-		for(int r = position[ROW]; r>=0; r--){
-			for(int c = position[COL]; c<state.getColCount(); c++){
+		for(int r = 0; r<state.getRowCount(); r++){
+			for(int c = 0; c<state.getColCount(); c++){
 				if(model[r][c]==type){
 					Pos1 = new int[2];
 					Pos1[ROW] = r;
 					Pos1[COL] = c;
-					break;
+					Dist1 = Math.pow(position[ROW] - Pos1[ROW], 2) + Math.pow(position[COL] - Pos1[COL], 2);
+					if(Math.min(bestDist, Dist1)==Dist1){
+						bestDist = Dist1;
+						bestPos = Pos1;
+					}
 				}
 			}
-		}
-		for(int r = position[ROW]; r<state.getRowCount(); r++){
-			for(int c = position[COL]; c>=0; c--){
-				if(model[r][c]==type){
-					Pos2 = new int[2];
-					Pos2[ROW] = r;
-					Pos2[COL] = c;
-					break;
-				}
-			}
-		}
-		if(Pos1!=null){
-			Dist1 = Math.pow(position[ROW] - Pos1[ROW], 2) + Math.pow(position[ROW] - Pos1[COL], 2);
-		}
-		if(Pos2!=null){
-			Dist2 = Math.pow(position[ROW] - Pos2[ROW], 2) + Math.pow(position[ROW] - Pos2[COL], 2);
-		}
-		if(Math.min(Dist1, Dist2)==Dist1){
-			bestPos = Pos1;
-		}
-		else{
-			bestPos = Pos2;
 		}
 		return bestPos;
 	}
