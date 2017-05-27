@@ -1,45 +1,30 @@
 package application;
 
 import java.io.File;
-import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class MainMenu extends Application {
 	
 	public GraphicsContext gc;
 	public double screenWidth = Screen.getPrimary().getBounds().getWidth();
     public double screenHeight = Screen.getPrimary().getBounds().getHeight();
-	private boolean startSelection = true;
 	private static MediaPlayer mediaPlayer;
 	
     public static void main(String[] args) {
@@ -49,7 +34,7 @@ public class MainMenu extends Application {
 	@Override
 	public void start(Stage theStage){
 		
-		String path = "src/application/Edvard Grieg_ Peer Gynt - Morning Mood.mp3";
+		String path = "resources/sound/Edvard Grieg_ Peer Gynt - Morning Mood.mp3";
 		Media media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.setVolume(1.0);
@@ -68,10 +53,8 @@ public class MainMenu extends Application {
         root.getChildren().add( canvas );
 		
         gc = canvas.getGraphicsContext2D();
-        
-        GridPane grid = new GridPane();
 
-        Text title = new Text("PETER NORVING EXPLORATORIUM");
+        Text title = new Text("RUSSELL NORVING EXPLORATORIUM");
         title.setFont(Font.font ("MS PMincho", screenWidth/20));
         title.setX(screenWidth/2 - title.getLayoutBounds().getWidth()/2);
         title.setY(screenHeight/8);
@@ -91,7 +74,7 @@ public class MainMenu extends Application {
         root.getChildren().add(suckItText);
         root.getChildren().add(aradText);
         
-        Image suckItImage = new Image("file:SuckItScreenshot.png", screenWidth/2, screenHeight/2, true, false);
+        Image suckItImage = new Image("file:resources/images/SuckItScreenshot.png", screenWidth/2, screenHeight/2, true, false);
         gc.drawImage(suckItImage, screenWidth*.04, screenHeight*.4);
         
       //Handles key events

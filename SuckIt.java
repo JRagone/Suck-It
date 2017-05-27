@@ -111,7 +111,7 @@ public class SuckIt {
 	}
 	
 	public void music(){
-		String path = "src/application/2 Unlimited - Get Ready For This.mp3";
+		String path = "resources/sound/2 Unlimited - Get Ready For This.mp3";
 		Media media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.setVolume(.5);
